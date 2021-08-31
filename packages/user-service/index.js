@@ -3,6 +3,8 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from "dotenv";
+// route
+import userRoutes from "./routes/users.js";
 
 const app = express();
 dotenv.config();
@@ -27,6 +29,8 @@ app.use(
 
 // allow CORS
 app.use(cors());
+// registering routes
+app.use("/users", userRoutes);
 
 // add greetings for deployed API. this is just for testing whether our API works after deployment
 app.get("/", (req, res) => {
