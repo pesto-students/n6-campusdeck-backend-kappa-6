@@ -10,6 +10,10 @@
     ]
   },
   "scripts": {
-    "start": "lerna exec --scope auth-service -- yarn start"
+    "start-auth": "lerna exec --scope auth-service -- yarn start",
+    "start-post": "lerna exec --scope post-service -- yarn start",
+    "start-space": "lerna exec --scope space-service -- yarn start",
+    "start-user": "lerna exec --scope user-service -- yarn start",
+    "start-all": "lerna exec yarn start"
   }
 }
