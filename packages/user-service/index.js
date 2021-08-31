@@ -1,8 +1,9 @@
 // importing dependencies
-import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from "dotenv";
+import express from "express";
+import mongoose from "mongoose";
 // route
 import userRoutes from "./routes/users.js";
 
@@ -33,8 +34,18 @@ app.use(cors());
 app.use("/users", userRoutes);
 
 // add greetings for deployed API. this is just for testing whether our API works after deployment
-app.get("/", (req, res) => {
+app.get("/", (_, res) => {
   res.send("Welcome to CampusDeck User Service API by Pushpak Bhattacharya");
 });
 
-app.listen(PORT, () => console.log(`User Service started on port ${PORT}`));
+// connect to mongo atlas instance
+mongoose
+  .connect(process.env.MONGO_ATLAS_CONNECTION_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .then(() => {
+    // when connection to mongodb atlas is sucessfull, start the user service
+    app.listen(PORT, () => console.log(`User Service started on port ${PORT}`));
+  })
+  .catch(error => console.error(error.message));
