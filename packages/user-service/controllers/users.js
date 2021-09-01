@@ -58,10 +58,12 @@ export const signUp = async (req, res) => {
 
     return res.status(200).json({
       result,
+      status: "success",
       token
     });
   } catch (error) {
     res.status(500).json({
+      status: "error",
       message: `Something went wrong. ${error}`
     });
   }
