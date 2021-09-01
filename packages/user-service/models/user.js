@@ -21,7 +21,8 @@ const userSchema = mongoose.Schema({
     required: true
   },
   campus: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Campus",
     required: true
   },
   location: {
