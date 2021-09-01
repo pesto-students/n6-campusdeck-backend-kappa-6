@@ -20,6 +20,10 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  campus: {
+    type: String,
+    required: true
+  },
   location: {
     type: String,
     required: false
