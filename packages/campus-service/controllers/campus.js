@@ -16,6 +16,7 @@ export const getAllCampus = async (req, res) => {
     const allCampus = await Campus.find().sort({ _id: "desc" });
 
     res.status(200).json({
+      status: "success",
       data: allCampus
     });
   } catch (err) {
