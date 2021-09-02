@@ -1,16 +1,28 @@
 import Space from "../models/space.js";
 
 export const createSpace = async (req, res) => {
-  const result = await Space.create({
-    name: "Fests",
-    desc: "A place to enjoy and get info about fests at VIT",
-    tags: ["Info", "Advice", "Help"],
+  const { name, desc, img, isPublic, campus, tags } = req.body;
 
-    // parent
-    campus: "VIT, Vellore"
+  const newSpace = new Space({
+    name,
+    desc,
+    img,
+    isPublic,
+    campus,
+    tags
   });
 
-  res.status(200).send({
-    message: "Space created successfully"
-  });
+  try {
+    await newSpace.save();
+
+    res.status(201).send({
+      status: "success",
+      data: newSpace
+    });
+  } catch (error) {
+    res.status(409).json({
+      status: "error",
+      message: error.message
+    });
+  }
 };
