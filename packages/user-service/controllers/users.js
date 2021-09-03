@@ -9,6 +9,7 @@ export const signUp = async (req, res) => {
     confirmPassword,
     firstName,
     lastName,
+    userName,
     campus,
     location,
     about,
@@ -37,7 +38,7 @@ export const signUp = async (req, res) => {
 
     const result = await User.create({
       email,
-      userName: `${firstName}${lastName.charAt(0)}`,
+      userName,
       name: `${firstName} ${lastName}`,
       password: hashedPassword,
       campus,
