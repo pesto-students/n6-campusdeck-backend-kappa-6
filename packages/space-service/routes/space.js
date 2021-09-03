@@ -1,9 +1,14 @@
 import express from "express";
-import { createSpace, getAllSpacesByCampus } from "../controllers/space.js";
+import {
+  createSpace,
+  getSpaceById,
+  getAllSpacesByCampus
+} from "../controllers/space.js";
 
 const router = express.Router();
 
 router.post("/", createSpace);
-router.get("/:campusId", getAllSpacesByCampus);
+router.get("/:id", getSpaceById);
+router.get("/campus/:campusId", getAllSpacesByCampus);
 
 export default router;
