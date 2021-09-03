@@ -11,7 +11,8 @@ export const signUp = async (req, res) => {
     lastName,
     campus,
     location,
-    about
+    about,
+    role
   } = req.body;
 
   try {
@@ -41,7 +42,8 @@ export const signUp = async (req, res) => {
       password: hashedPassword,
       campus,
       location,
-      about
+      about,
+      role
     });
 
     /* at this point, we have a new user created.
