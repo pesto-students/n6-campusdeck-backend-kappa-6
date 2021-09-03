@@ -34,18 +34,20 @@ export const signUp = async (req, res) => {
     // hash password with salt difficulty as 12. This determines the speed at which the salting occurs
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    const { data } = await axios.get(
-      `${process.env.USER_SERVICE_URL}/getByName/${campus}`
+    const {
+      data: { data }
+    } = await axios.get(
+      `${process.env.CAMPUS_SERVICE_URL}/campus/getByName/${campus}`
     );
 
     if (!data.length) {
-      console.log("reached after campus fetch");
-      await axios.post(process.env.CAMPUS_SERVICE_URL, {
+      await axios.post(`${process.env.CAMPUS_SERVICE_URL}/campus`, {
         name: campus,
         admin: email
       });
     }
 
+    console.log(campus);
     const result = await Admin.create({
       email,
       userName: `${firstName}${lastName.charAt(0)}`,
