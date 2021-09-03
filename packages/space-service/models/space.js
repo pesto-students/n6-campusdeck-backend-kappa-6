@@ -28,8 +28,7 @@ const spaceSchema = mongoose.Schema({
   },
   // parent
   campus: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Campus",
+    type: String,
     required: true
   },
   isPublic: {

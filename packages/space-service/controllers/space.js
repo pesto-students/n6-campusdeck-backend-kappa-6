@@ -26,3 +26,21 @@ export const createSpace = async (req, res) => {
     });
   }
 };
+
+export const getAllSpacesByCampus = async (req, res) => {
+  const { campusId } = req.params;
+
+  try {
+    const spaces = await Space.find({ campusId });
+
+    res.status(200).send({
+      status: "success",
+      data: spaces
+    });
+  } catch (error) {
+    res.status(404).json({
+      status: "error",
+      message: error.message
+    });
+  }
+};
