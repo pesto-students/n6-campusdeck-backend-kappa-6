@@ -9,7 +9,9 @@ export const createPost = async (req, res) => {
     body,
     tag,
     space,
-    isPublic
+    isPublic,
+    creator: req.userId,
+    createdAt: new Date()
   });
 
   try {
