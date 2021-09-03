@@ -51,7 +51,7 @@ export const getAllSpacesByCampus = async (req, res) => {
   const { campusId } = req.params;
 
   try {
-    const spaces = await Space.find({ campusId });
+    const spaces = await Space.find({ campus: campusId });
 
     res.status(200).send({
       status: "success",

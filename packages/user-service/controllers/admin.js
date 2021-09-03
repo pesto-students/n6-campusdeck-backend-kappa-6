@@ -34,12 +34,14 @@ export const signUp = async (req, res) => {
     // hash password with salt difficulty as 12. This determines the speed at which the salting occurs
     const hashedPassword = await bcrypt.hash(password, 12);
 
+    // check if the campus already exists
     const {
       data: { data }
     } = await axios.get(
       `${process.env.CAMPUS_SERVICE_URL}/campus/getByName/${campus}`
     );
 
+    // if campus doesn't exist, create it
     if (!data.length) {
       await axios.post(`${process.env.CAMPUS_SERVICE_URL}/campus`, {
         name: campus,
@@ -47,7 +49,6 @@ export const signUp = async (req, res) => {
       });
     }
 
-    console.log(campus);
     const result = await Admin.create({
       email,
       userName: `${firstName}${lastName.charAt(0)}`,
@@ -86,7 +87,7 @@ export const signIn = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // gets at most one user because email is unique
+    // gets at most one admin because email is unique
     const existingUser = await Admin.findOne({ email });
 
     if (!existingUser) {
@@ -95,7 +96,7 @@ export const signIn = async (req, res) => {
       });
     }
 
-    // if user does exist, we need to check whether the password matches or not
+    // if admin does exist, we need to check whether the password matches or not
     const isPasswordValid = await bcrypt.compare(
       password,
       existingUser.password

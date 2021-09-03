@@ -9,7 +9,7 @@ import { auth } from "middlewares";
 const router = express.Router();
 
 router.post("/", auth, createSpace);
-router.get("/:id", getSpaceById);
 router.get("/campus/:campusId", getAllSpacesByCampus);
+router.get("/:id", getSpaceById);
 
 export default router;
