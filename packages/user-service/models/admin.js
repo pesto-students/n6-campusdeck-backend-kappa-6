@@ -1,7 +1,11 @@
 import mongoose from "mongoose";
 
-// defining a schema for how a user will look like
-const userSchema = mongoose.Schema({
+// defining a schema for how an admin will look like
+const adminSchema = mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  },
   email: {
     type: String,
     required: true,
@@ -12,10 +16,6 @@ const userSchema = mongoose.Schema({
     required: true,
     unique: true
   },
-  name: {
-    type: String,
-    required: true
-  },
   password: {
     type: String,
     required: true
@@ -25,11 +25,7 @@ const userSchema = mongoose.Schema({
     ref: "Campus",
     required: true
   },
-  location: {
-    type: String,
-    required: false
-  },
-  about: {
+  message: {
     type: String,
     required: false
   },
@@ -39,4 +35,4 @@ const userSchema = mongoose.Schema({
   }
 });
 
-export default mongoose.model("User", userSchema);
+export default mongoose.model("Admin", adminSchema);

@@ -6,6 +6,8 @@ import express from "express";
 import mongoose from "mongoose";
 // route
 import userRoutes from "./routes/users.js";
+import adminRoutes from "./routes/admin.js";
+
 import auth from "./middleware/auth.js";
 
 const app = express();
@@ -33,6 +35,7 @@ app.use(
 app.use(cors());
 // registering routes
 app.use("/users", userRoutes);
+app.use("/admin", adminRoutes);
 
 // add greetings for deployed API. this is just for testing whether our API works after deployment
 app.get("/", (_, res) => {
