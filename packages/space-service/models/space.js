@@ -34,6 +34,14 @@ const spaceSchema = mongoose.Schema({
   isPublic: {
     type: Boolean,
     default: true
+  },
+  creator: {
+    type: String,
+    required: true
+  },
+  createdAt: {
+    type: Date,
+    default: new Date()
   }
 });
 
