@@ -7,6 +7,7 @@ export const signUp = async (req, res) => {
   const {
     firstName,
     lastName,
+    userName,
     email,
     campus,
     password,
@@ -51,7 +52,7 @@ export const signUp = async (req, res) => {
 
     const result = await Admin.create({
       email,
-      userName: `${firstName}${lastName.charAt(0)}`,
+      userName,
       name: `${firstName} ${lastName}`,
       password: hashedPassword,
       campus,
