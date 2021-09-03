@@ -9,7 +9,9 @@ export const createSpace = async (req, res) => {
     img,
     isPublic,
     campus,
-    tags
+    tags,
+    creator: req.userId,
+    createdAt: new Date().toISOString()
   });
 
   try {

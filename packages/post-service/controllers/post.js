@@ -11,7 +11,7 @@ export const createPost = async (req, res) => {
     space,
     isPublic,
     creator: req.userId,
-    createdAt: new Date()
+    createdAt: new Date().toISOString()
   });
 
   try {

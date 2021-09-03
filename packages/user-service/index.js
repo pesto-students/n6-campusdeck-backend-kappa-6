@@ -6,7 +6,6 @@ import express from "express";
 import mongoose from "mongoose";
 // route
 import userRoutes from "./routes/users.js";
-import auth from "./middleware/auth.js";
 
 const app = express();
 dotenv.config();
@@ -50,5 +49,3 @@ mongoose
     app.listen(PORT, () => console.log(`User Service started on port ${PORT}`));
   })
   .catch(error => console.error(error.message));
-
-export { auth };
