@@ -1,14 +1,28 @@
 import Post from "../models/post.js";
 
 export const createPost = async (req, res) => {
-  const result = await Post.create({
-    title: "Test post 1",
-    body: "This is a test post. Will be deleted later",
-    tag: "Info",
-    space: "Fests"
+  const { title, type, body, tag, space, isPublic } = req.body;
+
+  const newPost = new Post({
+    title,
+    type,
+    body,
+    tag,
+    space,
+    isPublic
   });
 
-  res.status(200).send({
-    message: "Post created successfully"
-  });
+  try {
+    await newPost.save();
+
+    res.status(201).send({
+      status: "success",
+      data: newPost
+    });
+  } catch (error) {
+    res.status(409).json({
+      status: "error",
+      message: error.message
+    });
+  }
 };
