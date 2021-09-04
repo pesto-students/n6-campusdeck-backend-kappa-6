@@ -68,7 +68,7 @@ export const signUp = async (req, res) => {
         id: result._id
       },
       process.env.SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: "3h" }
     );
 
     return res.status(200).json({
