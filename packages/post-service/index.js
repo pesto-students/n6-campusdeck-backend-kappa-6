@@ -4,8 +4,9 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-// route
+// routes
 import postRoutes from "./routes/post.js";
+import commentRoutes from "./routes/comment.js";
 
 const app = express();
 dotenv.config();
@@ -32,6 +33,7 @@ app.use(
 app.use(cors());
 // registering routes
 app.use("/post", postRoutes);
+app.use("/comment", commentRoutes);
 
 // add greetings for deployed API. this is just for testing whether our API works after deployment
 app.get("/", (_, res) => {

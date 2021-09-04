@@ -18,6 +18,11 @@ const postSchema = mongoose.Schema({
   tag: {
     type: String
   },
+  comments: {
+    type: [String],
+    default: [],
+    required: false
+  },
   // parent
   space: {
     type: String,
