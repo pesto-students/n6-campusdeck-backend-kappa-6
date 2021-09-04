@@ -119,3 +119,23 @@ export const signIn = async (req, res) => {
     });
   }
 };
+
+export const getUserById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const user = await User.findById(id);
+
+    if (user) {
+      return res.status(200).json({
+        status: "success",
+        data: user
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: `Something went wrong. ${error}`
+    });
+  }
+};
