@@ -72,7 +72,7 @@ export const getFeed = async (req, res) => {
     );
 
     // based on the campus name, get the campus Id
-    const campusId = campusObj[0]._id;
+    const campusId = campusObj[0]?._id;
 
     // get all spaces of that campus
     const {
@@ -97,7 +97,7 @@ export const getFeed = async (req, res) => {
       data: feed
     });
   } catch (error) {
-    res.status(409).json({
+    res.status(400).json({
       status: "error",
       message: error.message
     });
