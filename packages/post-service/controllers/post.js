@@ -24,7 +24,7 @@ export const getPostsBySpace = async (req, res) => {
 };
 
 export const createPost = async (req, res) => {
-  const { title, type, body, tag, space, isPublic } = req.body;
+  const { title, type, body, tag, space, campus, isPublic } = req.body;
 
   const newPost = new Post({
     title,
@@ -32,6 +32,7 @@ export const createPost = async (req, res) => {
     body,
     tag,
     space,
+    campus,
     isPublic,
     creator: req.userId,
     createdAt: new Date().toISOString()

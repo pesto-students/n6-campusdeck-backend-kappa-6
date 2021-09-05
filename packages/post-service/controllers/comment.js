@@ -35,3 +35,23 @@ export const createComment = async (req, res) => {
     });
   }
 };
+
+export const getCommentById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const comment = await Comment.findById(id);
+
+    if (comment) {
+      res.status(200).send({
+        status: "success",
+        data: comment
+      });
+    }
+  } catch (error) {
+    res.status(409).json({
+      status: "error",
+      message: error.message
+    });
+  }
+};

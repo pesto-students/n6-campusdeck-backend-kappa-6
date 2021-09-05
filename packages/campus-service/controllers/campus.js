@@ -14,6 +14,24 @@ export const createCampus = async (req, res) => {
   });
 };
 
+export const getCampusById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const campus = await Campus.findById(id);
+
+    res.status(200).send({
+      status: "success",
+      data: campus
+    });
+  } catch (error) {
+    res.status(404).json({
+      status: "error",
+      message: error.message
+    });
+  }
+};
+
 export const getCampusByName = async (req, res) => {
   const { name } = req.params;
 
