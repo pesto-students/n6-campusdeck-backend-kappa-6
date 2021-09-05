@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import axios from "axios";
 import Post from "../models/post.js";
 
@@ -17,6 +18,47 @@ export const getPostsBySpace = async (req, res) => {
     });
   } catch (error) {
     res.status(409).json({
+      status: "error",
+      message: error.message
+    });
+  }
+};
+
+export const likePost = async (req, res) => {
+  const { id } = req.params;
+
+  // checking to see if the received ID is a valid ID as per mongodb
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send(`No posts found with the ID of ${id}`);
+
+  try {
+    const post = await Post.findById(id);
+
+    /**
+     * Checks to see if the current user has already liked a particular post.
+     * Value of 'index' will be -1 if the user has not liked the post. In that case,
+     * we want to add the userId to the likes array.
+     * Value of index will not be -1 if the user has already liked the post. In that
+     * case, that userId will be removed from the likes array, essentially unliking the post.
+     */
+    const index = post.likes.findIndex(id => id === String(req.userId));
+
+    if (index === -1) {
+      post.likes.push(req.userId);
+    } else {
+      post.likes = post.likes.filter(id => id !== String(req.userId));
+    }
+
+    const updatedPost = await Post.findByIdAndUpdate(id, post, {
+      new: true
+    });
+
+    res.status(200).send({
+      status: "success",
+      data: updatedPost
+    });
+  } catch (error) {
+    res.status(400).json({
       status: "error",
       message: error.message
     });
