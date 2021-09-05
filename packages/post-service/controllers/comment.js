@@ -3,11 +3,11 @@ import Comment from "../models/comment.js";
 
 export const createComment = async (req, res) => {
   const { parentId } = req.params;
-  const { authorName, authorImg, content, createdAt } = req.body;
+  const { author, authorImg, content, createdAt } = req.body;
 
   const newComment = new Comment({
     parent: parentId,
-    author: authorName,
+    author,
     authorImg,
     content,
     createdAt
