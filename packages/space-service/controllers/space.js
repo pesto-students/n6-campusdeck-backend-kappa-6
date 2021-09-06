@@ -2,6 +2,22 @@ import mongoose from "mongoose";
 import { User } from "user-service";
 import Space from "../models/space.js";
 
+export const getTrendingSpaces = async (req, res) => {
+  try {
+    const trendingSpaces = await Space.find().sort({ members: -1 }).limit(5);
+
+    res.status(200).send({
+      status: "success",
+      data: trendingSpaces
+    });
+  } catch (error) {
+    res.status(404).json({
+      status: "error",
+      message: error.message
+    });
+  }
+};
+
 export const createSpace = async (req, res) => {
   const { name, desc, img, isPublic, campus, tags } = req.body;
 
