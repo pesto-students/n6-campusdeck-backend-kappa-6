@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Space, User } from "models";
+import { Space, User, Campus } from "models";
 
 export const getTrendingSpaces = async (req, res) => {
   try {
@@ -32,7 +32,13 @@ export const createSpace = async (req, res) => {
   });
 
   try {
-    await newSpace.save();
+    const { _id } = await newSpace.save({ new: true });
+
+    const dbCampus = await Campus.findById(campus);
+
+    dbCampus.spaces.push(_id);
+
+    await Campus.findByIdAndUpdate(campus, dbCampus);
 
     res.status(201).send({
       status: "success",

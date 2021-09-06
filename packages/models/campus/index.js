@@ -11,6 +11,10 @@ const campusSchema = mongoose.Schema({
     type: String,
     required: true,
     unique: false
+  },
+  spaces: {
+    type: [String],
+    default: []
   }
 });
 

@@ -3,11 +3,13 @@ import {
   createCampus,
   getAllCampus,
   getCampusById,
-  getCampusByName
+  getCampusByName,
+  getPopularCampus
 } from "../controllers/campus.js";
 
 const router = express.Router();
 
+router.get("/popular", getPopularCampus);
 router.get("/", getAllCampus);
 router.get("/:id", getCampusById);
 router.get("/getByName/:name", getCampusByName);

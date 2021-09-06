@@ -1,5 +1,21 @@
 import { Campus } from "models";
 
+export const getPopularCampus = async (req, res) => {
+  try {
+    const popularCampus = await Campus.find().sort({ spaces: -1 }).limit(5);
+
+    res.status(200).send({
+      status: "success",
+      data: popularCampus
+    });
+  } catch (error) {
+    res.status(404).json({
+      status: "error",
+      message: error.message
+    });
+  }
+};
+
 export const createCampus = async (req, res) => {
   const { name, admin } = req.body;
 
