@@ -42,6 +42,10 @@ const spaceSchema = mongoose.Schema({
   createdAt: {
     type: Date,
     default: new Date()
+  },
+  members: {
+    type: [String],
+    default: []
   }
 });
 

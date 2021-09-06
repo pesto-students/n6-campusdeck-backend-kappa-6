@@ -35,6 +35,10 @@ const userSchema = mongoose.Schema({
   profileImg: {
     type: String,
     required: false
+  },
+  mySpaces: {
+    type: [String],
+    default: []
   }
 });
 
