@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
-import { User } from "user-service";
-import Space from "../models/space.js";
+import { Space, User } from "models";
 
 export const getTrendingSpaces = async (req, res) => {
   try {

@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import axios from "axios";
-import Admin from "../models/admin.js";
+import { Admin } from "models";
 
 export const signUp = async (req, res) => {
   const {

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import axios from "axios";
-import Post from "../models/post.js";
+import { Post } from "models";
 
 export const getPostsBySpace = async (req, res) => {
   const { spaceId } = req.params;

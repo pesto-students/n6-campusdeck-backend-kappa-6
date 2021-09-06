@@ -1,4 +1,4 @@
-import Campus from "../models/campus.js";
+import { Campus } from "models";
 
 export const createCampus = async (req, res) => {
   const { name, admin } = req.body;

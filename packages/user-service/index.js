@@ -8,8 +8,6 @@ import mongoose from "mongoose";
 import userRoutes from "./routes/users.js";
 import adminRoutes from "./routes/admin.js";
 
-import User from "./models/user.js";
-
 const app = express();
 dotenv.config();
 
@@ -53,5 +51,3 @@ mongoose
     app.listen(PORT, () => console.log(`User Service started on port ${PORT}`));
   })
   .catch(error => console.error(error.message));
-
-export { User };
