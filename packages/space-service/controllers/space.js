@@ -2,6 +2,44 @@ import mongoose from "mongoose";
 import uniq from "lodash/uniq.js";
 import { Space, User, Campus } from "models";
 
+export const searchSpace = async (req, res) => {
+  const { q } = req.query;
+
+  try {
+    // creates a case-insensitive regex based on our search term
+    const searchTerm = new RegExp(q, "i");
+
+    const spaces = await Space.find({
+      $or: [
+        { name: searchTerm },
+        { desc: searchTerm },
+        {
+          tags: {
+            $in: searchTerm
+          }
+        }
+      ]
+    });
+
+    if (spaces.length > 0) {
+      res.status(200).send({
+        status: "success",
+        data: spaces
+      });
+    } else {
+      res.status(404).send({
+        status: "success",
+        data: "No spaces found"
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: error.message
+    });
+  }
+};
+
 export const getPreferredSpaces = async (req, res) => {
   const userId = req.userId;
   const preferredSpaces = [];
