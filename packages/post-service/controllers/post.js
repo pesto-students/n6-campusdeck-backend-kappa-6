@@ -2,6 +2,28 @@ import mongoose from "mongoose";
 import axios from "axios";
 import { Post } from "models";
 
+export const getPostsByCampus = async (req, res) => {
+  const { campusId } = req.params;
+
+  try {
+    const posts = await Post.find({ campus: campusId })
+      .sort({
+        createdAt: "desc"
+      })
+      .limit(5);
+
+    res.status(200).send({
+      status: "success",
+      data: posts
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: error.message
+    });
+  }
+};
+
 export const getPostsBySpace = async (req, res) => {
   const { spaceId } = req.params;
 
@@ -17,7 +39,7 @@ export const getPostsBySpace = async (req, res) => {
       data: posts
     });
   } catch (error) {
-    res.status(409).json({
+    res.status(500).json({
       status: "error",
       message: error.message
     });
