@@ -39,6 +39,10 @@ const userSchema = mongoose.Schema({
   mySpaces: {
     type: [String],
     default: []
+  },
+  preferences: {
+    type: [String],
+    default: []
   }
 });
 
