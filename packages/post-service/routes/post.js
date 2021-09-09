@@ -6,7 +6,8 @@ import {
   getPostsByCampus,
   likePost,
   searchPosts,
-  getPostsByUser
+  getPostsByUser,
+  getPostById
 } from "../controllers/post.js";
 import { auth } from "middlewares";
 
@@ -19,5 +20,6 @@ router.post("/", auth, createPost);
 router.patch("/:id/likePost", auth, likePost);
 router.get("/search", searchPosts);
 router.get("/byUser/:id", getPostsByUser);
+router.get("/:id", getPostById);
 
 export default router;

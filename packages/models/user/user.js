@@ -43,6 +43,10 @@ const userSchema = mongoose.Schema({
   preferences: {
     type: [String],
     default: []
+  },
+  savedPosts: {
+    type: [String],
+    default: []
   }
 });
 

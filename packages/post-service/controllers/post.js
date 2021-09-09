@@ -2,6 +2,26 @@ import mongoose from "mongoose";
 import axios from "axios";
 import { Post } from "models";
 
+export const getPostById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const post = await Post.findById(id);
+
+    if (post) {
+      res.status(200).send({
+        status: "success",
+        data: post
+      });
+    }
+  } catch (error) {
+    res.status(404).json({
+      status: "error",
+      message: error.message
+    });
+  }
+};
+
 export const getPostsByUser = async (req, res) => {
   const { id } = req.params;
 
