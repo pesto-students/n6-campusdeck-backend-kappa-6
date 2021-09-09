@@ -2,6 +2,77 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { User } from "models";
 
+export const followUser = async (req, res) => {
+  const { id: followee } = req.params;
+  const followerId = req.userId;
+  let operationType = "follow";
+
+  try {
+    const user = await User.findById(followee);
+
+    if (user) {
+      const index = user.followers.findIndex(id => id === String(followerId));
+
+      if (index === -1) {
+        user.followers.push(followerId);
+      } else {
+        user.followers = user.followers.filter(id => id !== String(followerId));
+        operationType = "unfollow";
+      }
+
+      const updatedUser = await User.findByIdAndUpdate(followee, user, {
+        new: true
+      });
+
+      res.status(200).send({
+        status: "success",
+        operationType,
+        data: updatedUser
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: `Something went wrong. ${error}`
+    });
+  }
+};
+
+export const savePost = async (req, res) => {
+  const { userId, postId } = req.params;
+  let isAdded = false;
+
+  try {
+    const user = await User.findById(userId);
+
+    if (user) {
+      const index = user.savedPosts.findIndex(id => id === String(postId));
+
+      if (index === -1) {
+        user.savedPosts.push(postId);
+        isAdded = true;
+      } else {
+        user.savedPosts = user.savedPosts.filter(id => id !== String(postId));
+      }
+
+      const updatedUser = await User.findByIdAndUpdate(userId, user, {
+        new: true
+      });
+
+      res.status(200).send({
+        status: "success",
+        type: isAdded ? "added" : "removed",
+        data: updatedUser
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: `Something went wrong. ${error}`
+    });
+  }
+};
+
 export const signUp = async (req, res) => {
   const {
     email,

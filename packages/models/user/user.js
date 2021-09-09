@@ -47,6 +47,10 @@ const userSchema = mongoose.Schema({
   savedPosts: {
     type: [String],
     default: []
+  },
+  followers: {
+    type: [String],
+    default: []
   }
 });
 
