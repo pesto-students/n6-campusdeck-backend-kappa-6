@@ -2,6 +2,31 @@ import mongoose from "mongoose";
 import axios from "axios";
 import { Post } from "models";
 
+export const getPostsByUser = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const posts = await Post.find({ creator: id });
+
+    if (posts) {
+      res.status(200).send({
+        status: "success",
+        data: posts
+      });
+    } else {
+      res.status(404).send({
+        status: "success",
+        data: "No posts found by user"
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: error.message
+    });
+  }
+};
+
 export const searchPosts = async (req, res) => {
   const { q } = req.query;
 
