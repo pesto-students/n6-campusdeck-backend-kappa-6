@@ -5,7 +5,9 @@ import {
   getPostsBySpace,
   getPostsByCampus,
   likePost,
-  searchPosts
+  searchPosts,
+  getPostsByUser,
+  getPostById
 } from "../controllers/post.js";
 import { auth } from "middlewares";
 
@@ -17,5 +19,7 @@ router.get("/feed", auth, getFeed);
 router.post("/", auth, createPost);
 router.patch("/:id/likePost", auth, likePost);
 router.get("/search", searchPosts);
+router.get("/byUser/:id", getPostsByUser);
+router.get("/:id", getPostById);
 
 export default router;
