@@ -1,5 +1,89 @@
 import mongoose from "mongoose";
+import uniq from "lodash/uniq.js";
 import { Space, User, Campus } from "models";
+
+export const searchSpace = async (req, res) => {
+  const { q } = req.query;
+
+  try {
+    // creates a case-insensitive regex based on our search term
+    const searchTerm = new RegExp(q, "i");
+
+    const spaces = await Space.find({
+      $or: [
+        { name: searchTerm },
+        { desc: searchTerm },
+        {
+          tags: {
+            $in: searchTerm
+          }
+        }
+      ]
+    });
+
+    if (spaces.length > 0) {
+      res.status(200).send({
+        status: "success",
+        data: spaces
+      });
+    } else {
+      res.status(404).send({
+        status: "success",
+        data: "No spaces found"
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: error.message
+    });
+  }
+};
+
+export const getPreferredSpaces = async (req, res) => {
+  const userId = req.userId;
+  const preferredSpaces = [];
+
+  try {
+    const user = await User.findById(userId);
+
+    const userPref = user.preferences;
+
+    const allCampus = await Campus.find();
+
+    if (allCampus) {
+      for (const campus of allCampus) {
+        const spaces = campus.spaces;
+
+        if (spaces) {
+          for (const space of spaces) {
+            const dbSpace = await Space.findById(space);
+
+            if (dbSpace) {
+              const tags = dbSpace.tags;
+
+              tags?.map(tag => {
+                if (userPref.includes(tag)) {
+                  preferredSpaces.push(dbSpace._id);
+                }
+              });
+            }
+          }
+        }
+      }
+    }
+
+    res.status(200).send({
+      status: "success",
+      data: uniq(preferredSpaces)
+    });
+  } catch (error) {
+    res.status(404).json({
+      status: "error",
+      message: error.message
+    });
+  }
+};
 
 export const getTrendingSpaces = async (req, res) => {
   try {

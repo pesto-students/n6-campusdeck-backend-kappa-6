@@ -2,6 +2,36 @@ import mongoose from "mongoose";
 import axios from "axios";
 import { Post } from "models";
 
+export const searchPosts = async (req, res) => {
+  const { q } = req.query;
+
+  try {
+    // creates a case-insensitive regex based on our search term
+    const searchTerm = new RegExp(q, "i");
+
+    const posts = await Post.find({
+      $or: [{ title: searchTerm }, { body: searchTerm }, { tag: searchTerm }]
+    });
+
+    if (posts.length > 0) {
+      res.status(200).send({
+        status: "success",
+        data: posts
+      });
+    } else {
+      res.status(404).send({
+        status: "success",
+        data: "No posts found"
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: error.message
+    });
+  }
+};
+
 export const getPostsByCampus = async (req, res) => {
   const { campusId } = req.params;
 

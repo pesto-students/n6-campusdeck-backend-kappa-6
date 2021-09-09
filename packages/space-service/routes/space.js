@@ -4,7 +4,9 @@ import {
   getSpaceById,
   getAllSpacesByCampus,
   joinSpace,
-  getTrendingSpaces
+  getTrendingSpaces,
+  getPreferredSpaces,
+  searchSpace
 } from "../controllers/space.js";
 import { auth } from "middlewares";
 
@@ -14,6 +16,8 @@ router.post("/", auth, createSpace);
 router.get("/campus/:campusId", getAllSpacesByCampus);
 router.patch("/:id/join", auth, joinSpace);
 router.get("/trending", getTrendingSpaces);
+router.get("/explore", auth, getPreferredSpaces);
+router.get("/search", searchSpace);
 router.get("/:id", getSpaceById);
 
 export default router;

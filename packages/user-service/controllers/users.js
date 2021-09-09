@@ -140,6 +140,33 @@ export const getUserById = async (req, res) => {
   }
 };
 
+export const addPreference = async (req, res) => {
+  const { id } = req.params;
+  const { preferences } = req.body;
+
+  try {
+    const user = await User.findById(id);
+
+    if (user) {
+      user.preferences.push(...preferences);
+
+      const updatedUser = await User.findByIdAndUpdate(id, user, {
+        new: true
+      });
+
+      res.status(200).send({
+        status: "success",
+        data: updatedUser
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: `Something went wrong. ${error}`
+    });
+  }
+};
+
 export const getUserSpaces = async (req, res) => {
   const { id } = req.params;
 
