@@ -1,7 +1,32 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import axios from "axios";
-import { Admin } from "models";
+import { Admin, User } from "models";
+
+export const getStudentsInCampus = async (req, res) => {
+  const { campus } = req.params;
+
+  try {
+    const users = await User.find({ campus });
+
+    if (users.length === 0) {
+      return res.status(404).json({
+        status: "success",
+        data: "No users found"
+      });
+    } else {
+      return res.status(200).json({
+        status: "success",
+        data: users
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: `Something went wrong. ${error}`
+    });
+  }
+};
 
 export const signUp = async (req, res) => {
   const {
