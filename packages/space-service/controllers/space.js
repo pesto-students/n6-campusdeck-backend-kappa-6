@@ -2,6 +2,24 @@ import mongoose from "mongoose";
 import uniq from "lodash/uniq.js";
 import { Space, User, Campus } from "models";
 
+export const deleteSpace = async (req, res) => {
+  const { id: spaceId } = req.params;
+
+  try {
+    await Space.findByIdAndRemove(spaceId);
+
+    res.status(200).send({
+      status: "success",
+      data: "Space deleted successfully"
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: error.message
+    });
+  }
+};
+
 export const editSpace = async (req, res) => {
   const { id: spaceId } = req.params;
   const { name, desc, img, isPublic, tags } = req.body;

@@ -7,7 +7,8 @@ import {
   getTrendingSpaces,
   getPreferredSpaces,
   searchSpace,
-  editSpace
+  editSpace,
+  deleteSpace
 } from "../controllers/space.js";
 import { auth } from "middlewares";
 
@@ -21,5 +22,6 @@ router.get("/explore", auth, getPreferredSpaces);
 router.get("/search", searchSpace);
 router.get("/:id", getSpaceById);
 router.put("/:id", editSpace);
+router.delete("/:id", deleteSpace);
 
 export default router;
