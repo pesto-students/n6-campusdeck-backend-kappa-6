@@ -2,6 +2,43 @@ import mongoose from "mongoose";
 import uniq from "lodash/uniq.js";
 import { Space, User, Campus } from "models";
 
+export const editSpace = async (req, res) => {
+  const { id: spaceId } = req.params;
+  const { name, desc, img, isPublic, tags } = req.body;
+
+  try {
+    const space = await Space.findById(spaceId);
+
+    if (space) {
+      const updatedSpace = await Space.findByIdAndUpdate(
+        spaceId,
+        {
+          name,
+          desc,
+          img,
+          isPublic,
+          tags
+        },
+        { new: true }
+      );
+      res.status(201).send({
+        status: "success",
+        data: updatedSpace
+      });
+    } else {
+      res.status(404).send({
+        status: "success",
+        data: "Space not found"
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: error.message
+    });
+  }
+};
+
 export const searchSpace = async (req, res) => {
   const { q } = req.query;
 
