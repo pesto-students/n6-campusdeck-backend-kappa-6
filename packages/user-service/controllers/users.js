@@ -2,6 +2,40 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { User } from "models";
 
+export const editUser = async (req, res) => {
+  const { id: userId } = req.params;
+  const { name, location, about } = req.body;
+
+  try {
+    const user = await User.findById(userId);
+
+    if (user) {
+      user.name = name;
+      user.location = location;
+      user.about = about;
+
+      const updatedUser = await User.findByIdAndUpdate(userId, user, {
+        new: true
+      });
+
+      res.status(200).send({
+        status: "success",
+        data: updatedUser
+      });
+    } else {
+      res.status(404).json({
+        status: "error",
+        message: `User not found`
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: `Something went wrong. ${error}`
+    });
+  }
+};
+
 export const updateProfileImg = async (req, res) => {
   const userId = req.userId;
   const { image } = req.body;
