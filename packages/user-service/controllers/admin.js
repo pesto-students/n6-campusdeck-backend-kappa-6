@@ -1,7 +1,47 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import axios from "axios";
+import sgMail from "@sendgrid/mail";
 import { Admin, User } from "models";
+
+// setting the API key for sendgrid
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+export const sendInvites = async (req, res) => {
+  const { encodedInfo } = req.body;
+
+  try {
+    if (encodedInfo) {
+      const { email, campus } = JSON.parse(atob(encodedInfo));
+
+      const msg = {
+        to: email,
+        from: "rtpushpak@gmail.com",
+        subject: `Welcome to CampusDeck!`,
+        html: `<strong>${campus}</strong> is inviting you to join CampusDeck.
+        Click <a clicktracking="off" href="http://localhost:3000/register/${encodedInfo}">here</a> to join.`
+      };
+
+      sgMail
+        .send(msg)
+        .then(() => {
+          console.log("Message sent!");
+        })
+        .catch(err => {
+          console.log(`Some problem while sending the mail: ${err}`);
+        });
+
+      return res.status(200).json({
+        status: "success"
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: `Something went wrong. ${error}`
+    });
+  }
+};
 
 export const getStudentsInCampus = async (req, res) => {
   const { campus } = req.params;
