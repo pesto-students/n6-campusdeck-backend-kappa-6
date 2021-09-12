@@ -13,7 +13,7 @@ export const createComment = async (req, res) => {
   });
 
   try {
-    await newComment.save();
+    const comment = await newComment.save({ new: true });
 
     const post = await Post.findById(parentId);
 
@@ -25,7 +25,7 @@ export const createComment = async (req, res) => {
 
     res.status(200).send({
       status: "success",
-      data: updatedPost
+      data: { updatedPost, comment }
     });
   } catch (error) {
     res.status(409).json({
